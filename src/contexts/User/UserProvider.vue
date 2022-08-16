@@ -1,6 +1,17 @@
 <script lang="ts" setup>
-import { reactive, provide, toRefs, readonly } from "vue";
-import { UserState, UserStateKey, UserActionsKey, UserActions } from "./types";
+import {
+  reactive,
+  provide,
+  readonly,
+  computed
+} from "vue";
+import {
+  UserState,
+  UserActions,
+  UserContextKey,
+  UserGetters,
+  CreateGetters
+} from "./types";
 
 defineProps<{
   tag: keyof HTMLElementTagNameMap;
@@ -8,22 +19,31 @@ defineProps<{
 }>();
 
 const state: UserState = reactive({
-  name: "",
-  email: "",
+  firstName: "",
+  lastName: "",
+  email: "test@test.com",
 });
 
-const setName: UserActions["setName"] = (name: string) => {
-  state.name = name;
+const getters: CreateGetters<UserGetters> = {
+  fullName: computed(() => `${state.firstName} ${state.lastName}`),
 };
 
-const setEmail: UserActions["setEmail"] = (email: string) => {
-  state.email = email;
+const actions: UserActions = {
+  setFirstName: (firstName: string) => {
+    state.firstName = firstName;
+  },
+  setLastName: (lastName: string) => {
+    state.lastName = lastName;
+  },
+  setEmail: (email: string) => {
+    state.email = email;
+  },
 };
 
-provide(UserStateKey, toRefs(readonly(state)));
-provide(UserActionsKey, {
-  setName,
-  setEmail,
+provide(UserContextKey, {
+  state: readonly(state),
+  getters,
+  actions,
 });
 </script>
 

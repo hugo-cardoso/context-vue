@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { inject } from "vue";
-import { UserStateKey } from "../contexts/User";
+import { useUser } from "../contexts/User";
 
-const userState = inject(UserStateKey);
+const userContext = useUser();
 </script>
 
 <template>
   <div class="block">
     <h1>Reading Block</h1>
     <div>
-      <p><strong>Name:</strong> {{ userState?.name.value }}</p>
-      <p><strong>Email:</strong> {{ userState?.email.value }}</p>
+      <p><strong>Name:</strong> {{ userContext.state.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ userContext.state.lastName }}</p>
+      <p><strong>Full Name:</strong> {{ userContext.getters.fullName.value }}</p>
+      <p><strong>Email:</strong> {{ userContext.state.email }}</p>
     </div>
   </div>
 </template>

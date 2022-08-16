@@ -1,4 +1,7 @@
 import UserProvider from "./UserProvider.vue";
-import { UserActionsKey, UserStateKey } from "./types";
+import { UserContextKey } from "./types";
+import { useContext } from "../../utils/useContext";
 
-export { UserProvider, UserActionsKey, UserStateKey };
+export const useUser = () => useContext(UserContextKey);
+
+export { UserProvider };

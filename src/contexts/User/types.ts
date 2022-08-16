@@ -1,16 +1,29 @@
-import { InjectionKey, ToRefs } from "vue";
+import { ComputedRef, InjectionKey } from "vue";
 
 export type UserState = {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
 };
 
+export type UserGetters = {
+  fullName: string;
+}
+
+export type CreateGetters<T> = {
+  [K in keyof T]: ComputedRef<T[K]>;
+}
+
 export type UserActions = {
-  setName: (name: string) => void;
+  setFirstName: (firstName: string) => void;
+  setLastName: (lastName: string) => void;
   setEmail: (email: string) => void;
 };
 
-export const UserStateKey: InjectionKey<ToRefs<UserState>> =
-  Symbol("userState");
+export type UserContext = {
+  state: UserState;
+  getters: CreateGetters<UserGetters>;
+  actions: UserActions;
+};
 
-export const UserActionsKey: InjectionKey<UserActions> = Symbol("userActions");
+export const UserContextKey: InjectionKey<UserContext> = Symbol("userContext");

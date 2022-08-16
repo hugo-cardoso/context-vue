@@ -1,28 +1,39 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
-import { UserActionsKey } from "../contexts/User";
+import { ref } from "vue";
+import { useUser } from "../contexts/User";
 
-const inputNameValue = ref("");
-const inputEmailValue = ref("");
+const inputFirstName = ref<HTMLInputElement>();
+const inputLastName = ref<HTMLInputElement>();
 
-const userActions = inject(UserActionsKey);
+const userContext = useUser();
 
 const handleFormSubmit = () => {
-  userActions?.setName(inputNameValue.value);
-  userActions?.setEmail(inputEmailValue.value);
+  if (!inputFirstName?.value || !inputLastName?.value) {
+    return;
+  }
 
-  inputNameValue.value = "";
-  inputEmailValue.value = "";
+  userContext.actions.setFirstName(inputFirstName.value.value.trim());
+  userContext.actions.setLastName(inputLastName.value.value.trim());
 };
 </script>
 
 <template>
   <form class="block" @submit.prevent="handleFormSubmit">
     <h1>Update Block</h1>
-    <label>Name</label>
-    <input type="text" v-model="inputNameValue" />
-    <label>Email</label>
-    <input type="text" v-model="inputEmailValue" />
+    <label>First Name</label>
+    <input
+      type="text"
+      ref="inputFirstName"
+      autocomplete="userFirstName"
+      :value="userContext.state.firstName"
+    />
+    <label>Last Name</label>
+    <input
+      type="text"
+      ref="inputLastName"
+      autocomplete="userLastName"
+      :value="userContext.state.lastName"
+    />
     <button type="submit">Update</button>
   </form>
 </template>
