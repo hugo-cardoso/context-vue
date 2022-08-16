@@ -19,34 +19,36 @@ const handleFormSubmit = () => {
 
 <template>
   <form class="block" @submit.prevent="handleFormSubmit">
-    <h1>Update Block</h1>
-    <label>First Name</label>
-    <input
-      type="text"
-      ref="inputFirstName"
-      autocomplete="userFirstName"
-      :value="userContext.state.firstName"
-    />
-    <label>Last Name</label>
-    <input
-      type="text"
-      ref="inputLastName"
-      autocomplete="userLastName"
-      :value="userContext.state.lastName"
-    />
-    <button type="submit">Update</button>
+    <div class="field">
+      <label class="label">First Name</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          ref="inputFirstName"
+          placeholder="First name"
+          :value="userContext.state.firstName"
+        >
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Last Name</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          ref="inputLastName"
+          placeholder="Last name"
+          :value="userContext.state.lastName"
+        >
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <button class="button is-primary">
+          Update
+        </button>
+      </div>
+    </div>
   </form>
 </template>
-
-<style scoped>
-.block {
-  width: 400px;
-  border: 1px solid #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 0 auto;
-  padding: 15px;
-  box-sizing: border-box;
-}
-</style>

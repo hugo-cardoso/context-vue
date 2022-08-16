@@ -5,16 +5,17 @@ import { UserProvider } from "./contexts/User";
 </script>
 
 <template>
-  <UserProvider tag="div" class="block">
+  <UserProvider tag="div" class="container is-max-desktop pt-4">
     <ComponentOne />
     <ComponentTwo />
   </UserProvider>
 </template>
 
 <style scoped>
-.block {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.container {
+  width: 400px;
+  max-width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 </style>
