@@ -11,10 +11,11 @@ export type UserGetters = {
 }
 
 export type CreateGetters<T> = {
-  [K in keyof T]: ComputedRef<T[K]>;
+  [K in keyof T]: () => T[K];
 }
 
 export type UserActions = {
+  reset: () => void;
   setFirstName: (firstName: string) => void;
   setLastName: (lastName: string) => void;
   setEmail: (email: string) => void;

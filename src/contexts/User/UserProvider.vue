@@ -1,54 +1,43 @@
 <script lang="ts" setup>
-import {
-  reactive,
-  provide,
-  readonly,
-  computed
-} from "vue";
-import {
-  UserState,
-  UserActions,
-  UserContextKey,
-  UserGetters,
-  CreateGetters
-} from "./types";
+import { reactive, provide } from "vue";
+import { UserContext, UserContextKey } from "./types";
 
 defineProps<{
   tag: keyof HTMLElementTagNameMap;
-  [key: string]: any;
 }>();
 
-const state: UserState = reactive({
+const INITIAL_STATE = {
   firstName: "",
   lastName: "",
-  email: "test@test.com",
-});
-
-const getters: CreateGetters<UserGetters> = {
-  fullName: computed(() => `${state.firstName} ${state.lastName}`),
+  email: ""
 };
 
-const actions: UserActions = {
-  setFirstName: (firstName: string) => {
-    state.firstName = firstName;
+const context: UserContext = {
+  state: reactive({ ...INITIAL_STATE }),
+  getters: {
+    fullName: () => `${context.state.firstName} ${context.state.lastName}`
   },
-  setLastName: (lastName: string) => {
-    state.lastName = lastName;
-  },
-  setEmail: (email: string) => {
-    state.email = email;
+  actions: {
+    reset: () => {
+      Object.assign(context.state, INITIAL_STATE);
+    },
+    setFirstName: (firstName: string) => {
+      context.state.firstName = firstName;
+    },
+    setLastName: (lastName: string) => {
+      context.state.lastName = lastName;
+    },
+    setEmail: (email: string) => {
+      context.state.email = email;
+    },
   },
 };
 
-provide(UserContextKey, {
-  state: readonly(state),
-  getters,
-  actions,
-});
+provide(UserContextKey, context);
 </script>
 
 <template>
-  <component :is="$props.tag" v-bind="$props">
+  <component :is="$props.tag">
     <slot></slot>
   </component>
 </template>

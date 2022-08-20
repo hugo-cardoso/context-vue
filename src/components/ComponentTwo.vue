@@ -15,10 +15,10 @@ const userContext = useUser();
           <strong>Last Name:</strong> {{ userContext.state.lastName }}
         </p>
         <p>
-          <strong>Full Name:</strong> {{ userContext.getters.fullName.value }}
+          <strong>Full Name:</strong> {{ userContext.getters.fullName() }}
         </p>
         <p>
-          <strong>Email</strong> {{ userContext.state.email }}
+          <strong>Email:</strong> {{ userContext.state.email }}
         </p>
       </div>
     </div>
